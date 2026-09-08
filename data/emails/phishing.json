@@ -1,0 +1,353 @@
+[
+  {
+    "email": {
+      "message_id": "phish-001",
+      "sender": "\"Microsoft Account Team\" <security@micros0ft-login.com>",
+      "subject": "Action required: unusual sign-in activity on your account",
+      "body_text": "Dear Customer,\n\nWe detected an unusual sign-in attempt on your Microsoft account from an unrecognised device in Lagos, Nigeria.\n\nIf this was not you, verify your account within 24 hours or your account will be suspended.\n\nVerify now: https://micros0ft-login.com/verify?email=alex.morgan@contoso.com\n\nMicrosoft Account Team",
+      "urls": [
+        "https://micros0ft-login.com/verify?email=alex.morgan@contoso.com"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=micros0ft-login.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "normal",
+    "notes": "Homoglyph domain, brand display name, DMARC fail, credential lure, victim identity pre-filled."
+  },
+  {
+    "email": {
+      "message_id": "phish-002",
+      "sender": "\"IT Helpdesk\" <helpdesk@0ffice365-support.com>",
+      "subject": "Your password expires today — action required",
+      "body_html": "<html><body><p>Dear User,</p><p>Your Office 365 password expires in 4 hours. To keep your mailbox active you must re-authenticate immediately.</p><p><a href='https://0ffice365-support.com/reauth?upn=alex.morgan@contoso.com'>https://login.microsoftonline.com/</a></p><p>Failure to respond will result in loss of access.</p></body></html>",
+      "urls": [
+        "https://0ffice365-support.com/reauth?upn=alex.morgan@contoso.com"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=0ffice365-support.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "normal",
+    "notes": "Anchor text shows login.microsoftonline.com, href goes elsewhere: display-vs-destination mismatch."
+  },
+  {
+    "email": {
+      "message_id": "phish-003",
+      "sender": "\"SharePoint Online\" <no-reply@sharepoint-docs-share.link>",
+      "subject": "Maria Alvarez shared 'FY25 Budget Final.xlsx' with you",
+      "body_text": "Maria Alvarez has shared a document with you.\n\nFY25 Budget Final.xlsx\n\nOpen: https://sharepoint-docs-share.link/d/8fa21?e=alex.morgan@contoso.com\n\nThis link will expire in 7 days. Sign in with your work account to view.",
+      "urls": [
+        "https://sharepoint-docs-share.link/d/8fa21?e=alex.morgan@contoso.com"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=sharepoint-docs-share.link; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "borderline",
+    "notes": "Uses a real colleague's name for credibility; the lure is a fake file-share."
+  },
+  {
+    "email": {
+      "message_id": "phish-004",
+      "sender": "\"PayPal Service\" <service@secure-paypa1.com>",
+      "subject": "Your account has been limited",
+      "body_html": "<html><body><p>Dear valued customer,</p><p>We have limited your account due to suspicious activity. Confirm your identity to restore access.</p><form action='https://secure-paypa1.com/collect' method='post'>Email: <input name='email'><br>Password: <input type='password' name='pw'><br><input type='submit' value='Confirm'></form></body></html>",
+      "urls": [
+        "https://secure-paypa1.com/collect"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=secure-paypa1.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "normal",
+    "notes": "Credential form embedded directly in the HTML body."
+  },
+  {
+    "email": {
+      "message_id": "phish-005",
+      "sender": "\"DocuSign Electronic Signature\" <dse@docusign-review.top>",
+      "subject": "Completed: Contoso Vendor Agreement — please review",
+      "body_text": "You have received a document to review and sign.\n\nReview Document: https://docusign-review.top/sign/aHR0cHM6Ly9ldmlsLXN0YWdpbmcueHl6L2xvZ2lu\n\nDo not share this email, link, or access code with others.",
+      "urls": [
+        "https://docusign-review.top/sign/aHR0cHM6Ly9ldmlsLXN0YWdpbmcueHl6L2xvZ2lu"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=docusign-review.top; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "borderline",
+    "notes": "DocuSign impersonation on an abused TLD; the real destination is base64-encoded in the path."
+  },
+  {
+    "email": {
+      "message_id": "phish-006",
+      "sender": "\"Contoso IT\" <it-support@contoso.com>",
+      "subject": "Mandatory MFA re-enrolment before Friday",
+      "body_text": "All staff,\n\nDue to a security upgrade, all users must re-enrol their multi-factor authentication before Friday. Accounts not re-enrolled will be locked.\n\nRe-enrol here: https://contoso.com.mfa-enrolment-portal.xyz/start\n\nContoso IT",
+      "urls": [
+        "https://contoso.com.mfa-enrolment-portal.xyz/start"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=contoso.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "hard",
+    "notes": "Spoofs the recipient's OWN domain (DMARC fail) and hides the real host in a subdomain prefix: contoso.com.<attacker>.xyz."
+  },
+  {
+    "email": {
+      "message_id": "phish-007",
+      "sender": "\"HR Benefits\" <benefits@hr-payroll-update.info>",
+      "subject": "Action needed: confirm your 2025 benefits election",
+      "body_text": "Hello,\n\nOpen enrolment closes tomorrow. Please sign in to confirm your 2025 benefits election. If you do not confirm, your coverage will default to the minimum plan.\n\nConfirm: https://hr-payroll-update.info/sso?user=alex.morgan@contoso.com",
+      "urls": [
+        "https://hr-payroll-update.info/sso?user=alex.morgan@contoso.com"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=hr-payroll-update.info; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "borderline",
+    "notes": "HR-themed credential harvest, plausible timing, no brand impersonation to lean on."
+  },
+  {
+    "email": {
+      "message_id": "phish-008",
+      "sender": "\"Amazon Billing\" <auto-confirm@amaz0n-billing.net>",
+      "subject": "Your Amazon order #302-9938471 for $1,289.99",
+      "body_text": "Thank you for your order.\n\nApple iPhone 16 Pro 512GB — $1,289.99\nShipping to: 44 Elm Street\n\nIf you did not authorise this purchase, cancel it here: https://amaz0n-billing.net/cancel?email=alex.morgan@contoso.com\n\nOr call 1-888-555-0142.",
+      "urls": [
+        "https://amaz0n-billing.net/cancel?email=alex.morgan@contoso.com"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=amaz0n-billing.net; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "normal",
+    "notes": "Fake-order 'cancel this' lure — panic-driven credential harvest."
+  },
+  {
+    "email": {
+      "message_id": "phish-009",
+      "sender": "\"Mailbox Administrator\" <postmaster@mail-relay-77.ru>",
+      "subject": "Your mailbox storage is full — 3 messages pending",
+      "body_text": "Warning: your mailbox quota has been exceeded.\n\n3 incoming messages are being held.\n\nRelease messages and increase your quota: http://185.203.117.44/owa/release?u=alex.morgan\n\nThis is an automated message from the mail server.",
+      "urls": [
+        "http://185.203.117.44/owa/release?u=alex.morgan"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=mail-relay-77.ru; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "normal",
+    "notes": "Quota lure pointing at a bare IP address over cleartext HTTP."
+  },
+  {
+    "email": {
+      "message_id": "phish-010",
+      "sender": "\"LinkedIn\" <notifications@linkedin.com>",
+      "subject": "You appeared in 9 searches this week",
+      "body_html": "<html><body><p>Hi Alex,</p><p>You appeared in 9 searches this week. See who's viewing your profile.</p><p><a href='https://linkedin.com/comm/redirect?url=https://account-verify-micrsoft.com/login'>See all searches</a></p></body></html>",
+      "urls": [
+        "https://linkedin.com/comm/redirect?url=https://account-verify-micrsoft.com/login"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=linkedin.com; dkim=pass header.d=linkedin.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=linkedin.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "PHISHING",
+    "expected_action": "QUARANTINE",
+    "difficulty": "hard",
+    "notes": "Passes DMARC from a genuine, trusted sender domain: the attack is an open redirect on linkedin.com pointing to a typosquat. Authentication alone cannot catch this."
+  }
+]

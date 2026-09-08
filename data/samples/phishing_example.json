@@ -1,0 +1,22 @@
+{
+  "message_id": "sample-001",
+  "sender": "\"Microsoft Account Team\" <security@micros0ft-login.com>",
+  "reply_to": "recovery-desk@gmail.com",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "Action required: unusual sign-in activity on your account",
+  "body_html": "<html><body><p>Dear Customer,</p><p>We detected an unusual sign-in attempt on your account. Verify within 24 hours or your account will be suspended.</p><p><a href=\"https://micros0ft-login.com/verify?email=alex.morgan@contoso.com\">https://login.microsoftonline.com/</a></p></body></html>",
+  "headers": {
+    "Authentication-Results": "spf=fail smtp.mailfrom=micros0ft-login.com; dkim=none; dmarc=fail (p=reject)"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez"
+    ]
+  }
+}

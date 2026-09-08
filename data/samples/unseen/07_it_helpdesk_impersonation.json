@@ -1,0 +1,26 @@
+{
+  "message_id": "u-07",
+  "sender": "\"Contoso Service Desk\" <servicedesk@contoso-helpdesk.link>",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "Ticket INC0044190 has been assigned to you",
+  "body_text": "Hello,\n\nIncident INC0044190 has been assigned to you for review. No action is required until the requester responds.\n\nContoso Service Desk",
+  "headers": {
+    "Authentication-Results": "spf=fail smtp.mailfrom=contoso-helpdesk.link; dkim=none; dmarc=fail (p=reject)"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "message_id": "u-05",
+  "sender": "\"Wealth Horizon\" <invites@wealthhorizon-summit.buzz>",
+  "recipients": [],
+  "subject": "Free masterclass: turn crypto volatility into passive income",
+  "body_text": "Hello,\n\nJoin our free masterclass this Thursday and learn the bitcoin strategy our members use for guaranteed passive income. Limited time offer — only 40 seats left!\n\nReserve now: http://wealthhorizon-summit.buzz/register",
+  "urls": [
+    "http://wealthhorizon-summit.buzz/register"
+  ],
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}

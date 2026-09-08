@@ -1,0 +1,33 @@
+{
+  "message_id": "u-03",
+  "sender": "\"Procurement\" <po@global-supply-chain.quest>",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "PO 44190 confirmation required",
+  "body_text": "Good day,\n\nPlease confirm receipt of the attached purchase order so we can release the shipment.\n\nRegards,\nProcurement Desk",
+  "attachments": [
+    {
+      "filename": "PO_44190_confirmation.iso",
+      "content_type": "application/pdf",
+      "size_bytes": 1411072
+    }
+  ],
+  "headers": {
+    "Authentication-Results": "spf=fail smtp.mailfrom=global-supply-chain.quest; dkim=none; dmarc=fail (p=reject)"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}

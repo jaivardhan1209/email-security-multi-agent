@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Security Inspector</title>
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --panel-2:#fbfbfd; --ink:#16181d; --muted:#6b7280;
+  --line:#e3e6ec; --line-strong:#cbd2dc;
+  --accent:#3b5bdb; --accent-soft:#e7ecfd;
+  --ok:#1b8a5a; --ok-soft:#e3f5ec;
+  --warn:#a86718; --warn-soft:#fdf1dd;
+  --review:#7a3fb5; --review-soft:#f2e9fb;
+  --bad:#c0392b; --bad-soft:#fbe9e7;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --radius:10px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --panel:#171a21; --panel-2:#1c2029; --ink:#e6e8ee; --muted:#98a0ae;
+    --line:#262b36; --line-strong:#39404f;
+    --accent:#7c9aff; --accent-soft:#1e2740;
+    --ok:#4ade80; --ok-soft:#12291d;
+    --warn:#f0b429; --warn-soft:#2e2410;
+    --review:#c084fc; --review-soft:#271833;
+    --bad:#ff6b5e; --bad-soft:#331714;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+     font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{margin:0;font-weight:650;letter-spacing:-.01em}
+button{font:inherit;cursor:pointer}
+code,pre,.mono{font-family:var(--mono)}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:20;display:flex;gap:16px;align-items:center;
+  padding:12px 20px;background:var(--panel);border-bottom:1px solid var(--line)}
+header h1{font-size:15px}
+header h1 span{color:var(--muted);font-weight:400}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:99px;
+  font-size:11.5px;font-weight:600;border:1px solid var(--line-strong);background:var(--panel-2);color:var(--muted)}
+.badge.stub{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.badge.live{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.spacer{flex:1}
+.btn{padding:8px 18px;border-radius:8px;border:1px solid transparent;background:var(--accent);
+  color:#fff;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--muted);border-color:var(--line-strong)}
+
+/* ---------- layout ---------- */
+.layout{display:grid;grid-template-columns:minmax(320px,400px) minmax(0,1fr);gap:16px;padding:16px;align-items:start}
+@media(max-width:980px){.layout{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.card > h2{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
+  padding:11px 14px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.card-body{padding:14px}
+.stage{display:flex;flex-direction:column;gap:16px;min-width:0}
+
+/* ---------- input ---------- */
+.input-panel{position:sticky;top:70px;display:flex;flex-direction:column;gap:12px}
+select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--panel-2);
+  border:1px solid var(--line-strong);border-radius:8px;padding:8px 10px}
+textarea{font-family:var(--mono);font-size:12px;line-height:1.55;min-height:340px;resize:vertical;tab-size:2}
+select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}
+.err{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--bad-soft);color:var(--bad);
+  font-size:12.5px;display:none}
+.err.show{display:block}
+.sample-note{font-size:12px;color:var(--muted);border-left:2px solid var(--line-strong);padding-left:9px;margin-top:8px}
+
+/* ---------- pipeline graph ---------- */
+.graph{display:flex;flex-direction:column;gap:0;padding:16px 14px}
+.step-row{display:flex;align-items:center;gap:12px}
+.step-tag{flex:0 0 74px;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:right}
+.step-tag b{display:block;font-size:11px;color:var(--ink);font-weight:600}
+.nodes{flex:1;display:flex;gap:8px;flex-wrap:wrap;min-width:0}
+.connector{margin-left:86px;width:2px;height:14px;background:var(--line-strong);opacity:.55}
+.connector.fan{height:16px;background:linear-gradient(var(--line-strong),transparent)}
+.node{flex:1 1 0;min-width:104px;padding:9px 11px;border-radius:9px;border:1.5px solid var(--line);
+  background:var(--panel-2);transition:.25s;position:relative}
+.node .n-name{font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.node .n-sub{font-size:10.5px;color:var(--muted);margin-top:2px;font-family:var(--mono)}
+.node[data-state="running"]{border-color:var(--accent);background:var(--accent-soft);
+  animation:pulse 1.05s ease-in-out infinite}
+.node[data-state="done"]{border-color:var(--line-strong)}
+.node[data-state="failed"]{border-color:var(--bad);background:var(--bad-soft)}
+.node[data-hot="1"]{border-color:var(--bad);background:var(--bad-soft)}
+.node[data-hot="2"]{border-color:var(--warn);background:var(--warn-soft)}
+.node[data-hot="0"]{border-color:var(--ok);background:var(--ok-soft)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(90,130,255,.32)}50%{box-shadow:0 0 0 6px rgba(90,130,255,0)}}
+.superstep-note{font-size:11px;color:var(--muted);margin:2px 0 2px 86px;font-style:italic}
+
+/* ---------- verdict ---------- */
+.verdict{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:16px 18px;border-radius:var(--radius);
+  border:1px solid var(--line);background:var(--panel)}
+.verdict.DELIVER{background:var(--ok-soft);border-color:transparent}
+.verdict.JUNK{background:var(--warn-soft);border-color:transparent}
+.verdict.HIGH_RISK_REVIEW{background:var(--review-soft);border-color:transparent}
+.verdict.QUARANTINE,.verdict.BLOCK{background:var(--bad-soft);border-color:transparent}
+.verdict .cls{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.verdict .arrow{color:var(--muted);font-size:18px}
+.verdict .act{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.verdict.DELIVER .act{color:var(--ok)} .verdict.JUNK .act{color:var(--warn)}
+.verdict.HIGH_RISK_REVIEW .act{color:var(--review)} .verdict.QUARANTINE .act,.verdict.BLOCK .act{color:var(--bad)}
+.metrics{display:flex;gap:20px;margin-left:auto;flex-wrap:wrap}
+.metric{text-align:right}
+.metric b{display:block;font-size:17px;font-family:var(--mono);font-weight:650}
+.metric span{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.flagline{width:100%;font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.flag{padding:2px 8px;border-radius:99px;background:rgba(127,127,127,.16);font-weight:600;font-size:11.5px}
+
+/* ---------- agent cards ---------- */
+.agents{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.agent{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px;
+  display:flex;flex-direction:column;gap:9px;transition:.2s;opacity:.45}
+.agent.reported{opacity:1}
+.agent.fired{border-color:var(--line-strong);box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.agent .a-head{display:flex;align-items:baseline;gap:8px}
+.agent .a-name{font-weight:650;font-size:13px}
+.agent .a-cls{font-size:10.5px;padding:1px 7px;border-radius:99px;background:rgba(127,127,127,.15);color:var(--muted);font-weight:600}
+.agent .a-score{margin-left:auto;font-family:var(--mono);font-size:17px;font-weight:650}
+.fusebar{position:relative;height:26px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);overflow:hidden}
+.fusebar .fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--accent),var(--bad));opacity:.35}
+.fusebar .tick{position:absolute;top:0;bottom:0;width:2px}
+.fusebar .tick.det{background:var(--ink)}
+.fusebar .tick.llm{background:var(--accent)}
+.fusebar .tick.thr{background:repeating-linear-gradient(180deg,var(--muted) 0 3px,transparent 3px 6px);width:1.5px}
+.fusebar .tick.floor{background:repeating-linear-gradient(180deg,var(--bad) 0 3px,transparent 3px 6px);width:1.5px}
+.fusebar .lbl{position:absolute;top:4px;font-size:9.5px;font-family:var(--mono);color:var(--muted);transform:translateX(3px)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:10.5px;color:var(--muted)}
+.legend i{display:inline-block;width:9px;height:2px;vertical-align:middle;margin-right:4px}
+.evidence{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:3px}
+.evidence li{font-size:12px;color:var(--muted);padding-left:13px;position:relative;line-height:1.45}
+.evidence li::before{content:"·";position:absolute;left:3px;color:var(--line-strong);font-weight:700}
+.evidence li.model{font-style:italic}
+.a-foot{display:flex;gap:10px;font-size:10.5px;color:var(--muted);font-family:var(--mono);flex-wrap:wrap;
+  border-top:1px solid var(--line);padding-top:7px}
+details summary{cursor:pointer;font-size:11.5px;color:var(--accent);font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸ ";display:inline-block;transition:.15s}
+details[open] summary::before{transform:rotate(90deg) translateY(-2px)}
+.ind{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:2.5px 0;border-bottom:1px dotted var(--line)}
+.ind .w{font-family:var(--mono);color:var(--muted)}
+.ind .src{font-size:9.5px;text-transform:uppercase;color:var(--muted);opacity:.75}
+
+/* ---------- panels ---------- */
+.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--muted);padding:4px 6px;border-bottom:1px solid var(--line)}
+td{padding:5px 6px;border-bottom:1px solid var(--line)}
+td.num{font-family:var(--mono);text-align:right}
+tr.fired td{background:var(--bad-soft)}
+tr.fired td:first-child{font-weight:650}
+tr.failsafe td{background:var(--review-soft)}
+tr.dim td{color:var(--muted);opacity:.6}
+.formula{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--panel-2);
+  padding:8px 10px;border-radius:7px;border:1px solid var(--line);margin-top:10px;line-height:1.6}
+
+/* ---------- timeline ---------- */
+.tl-row{display:grid;grid-template-columns:130px 1fr 62px;gap:10px;align-items:center;padding:3px 0}
+.tl-name{font-size:11.5px;font-family:var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-track{position:relative;height:14px;background:var(--panel-2);border-radius:4px;border:1px solid var(--line)}
+.tl-bar{position:absolute;top:1px;bottom:1px;border-radius:3px;background:var(--accent);opacity:.8;min-width:2px}
+.tl-bar.agent{background:var(--bad)}
+.tl-ms{font-size:11px;font-family:var(--mono);color:var(--muted);text-align:right}
+.tl-caption{font-size:11.5px;color:var(--muted);margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}
+
+.empty{padding:38px 18px;text-align:center;color:var(--muted);font-size:13px}
+.log{max-height:170px;overflow:auto;font-family:var(--mono);font-size:11px;line-height:1.65;color:var(--muted)}
+.log div span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Email Security Inspector <span>· multi-agent pipeline</span></h1>
+  <span class="badge" id="provider-badge">connecting…</span>
+  <div class="spacer"></div>
+  <button class="btn ghost" id="btn-graph" title="Show the Mermaid topology">Topology</button>
+  <button class="btn" id="btn-run">Analyze</button>
+</header>
+
+<div class="layout">
+
+  <!-- ---------------- input ---------------- -->
+  <aside class="input-panel">
+    <div class="card">
+      <h2>Email input</h2>
+      <div class="card-body">
+        <select id="sample-select"><option value="">— load a sample —</option></select>
+        <div class="sample-note" id="sample-note" hidden></div>
+        <div class="hint">Paste any normalized email JSON, or a Microsoft Graph <code>message</code> resource.</div>
+        <textarea id="editor" spellcheck="false" aria-label="Email JSON"></textarea>
+        <div class="err" id="editor-err"></div>
+        <div class="hint">Two fields carry most of the signal: <code>headers["Authentication-Results"]</code>
+          and <code>org_context</code> (whose domain and whose executives to protect).</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ---------------- stage ---------------- -->
+  <section class="stage">
+
+    <div class="card">
+      <h2>Live workflow — Agent Framework events</h2>
+      <div class="graph" id="graph"></div>
+    </div>
+
+    <div id="verdict-slot"></div>
+
+    <div class="card" id="agents-card" hidden>
+      <h2>Agent verdicts — deterministic tools fused with model reasoning</h2>
+      <div class="card-body"><div class="agents" id="agents"></div></div>
+    </div>
+
+    <div class="panels" id="panels" hidden>
+      <div class="card">
+        <h2>Risk aggregation</h2>
+        <div class="card-body" id="agg"></div>
+      </div>
+      <div class="card">
+        <h2>Policy engine — deterministic, no model</h2>
+        <div class="card-body" id="policy"></div>
+      </div>
+    </div>
+
+    <div class="card" id="timeline-card" hidden>
+      <h2>Execution timeline</h2>
+      <div class="card-body" id="timeline"></div>
+    </div>
+
+    <div class="card">
+      <h2>Event stream</h2>
+      <div class="card-body log" id="log"><div class="empty" style="padding:8px">idle</div></div>
+    </div>
+
+  </section>
+</div>
+
+<script>
+"use strict";
+const $ = (s, r=document) => r.querySelector(s);
+const el = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls;
+                                if (txt !== undefined) n.textContent = txt; return n; };
+const pct = v => (Math.max(0, Math.min(1, v)) * 100).toFixed(1) + "%";
+const f3 = v => (v ?? 0).toFixed(3);
+
+let META = null;
+const NODE_ROWS = [
+  { tag: "ingest",     sub: "normalize",          nodes: ["ingestion"] },
+  { tag: "orchestrate",sub: "route + fan-out",    nodes: ["orchestrator"] },
+  { tag: "detect",     sub: "concurrent",         nodes: ["spam_agent","phishing_agent","malware_agent","bec_agent","url_agent"] },
+  { tag: "aggregate",  sub: "fan-in",             nodes: ["risk_aggregator"] },
+  { tag: "policy",     sub: "rules",              nodes: ["policy_engine"] },
+  { tag: "decide",     sub: "terminal",           nodes: ["human_review","final_decision"] },
+];
+const NODE_LABEL = {
+  ingestion:"Ingestion", orchestrator:"Orchestrator", spam_agent:"Spam", phishing_agent:"Phishing",
+  malware_agent:"Malware", bec_agent:"BEC", url_agent:"URL", risk_aggregator:"Risk Aggregator",
+  policy_engine:"Policy Engine", human_review:"Human Review", final_decision:"Delivery",
+};
+const NODE_KIND = {
+  ingestion:"executor", orchestrator:"executor", risk_aggregator:"executor", policy_engine:"executor",
+  human_review:"executor", final_decision:"executor",
+  spam_agent:"executor+agent", phishing_agent:"executor+agent", malware_agent:"executor+agent",
+  bec_agent:"executor+agent", url_agent:"executor+agent",
+};
+
+/* ---------------- graph ---------------- */
+function buildGraph() {
+  const g = $("#graph"); g.innerHTML = "";
+  NODE_ROWS.forEach((row, i) => {
+    if (i) { const c = el("div", "connector" + (row.nodes.length > 1 ? " fan" : "")); g.appendChild(c); }
+    const r = el("div", "step-row");
+    const tag = el("div", "step-tag"); tag.appendChild(el("b", null, row.tag));
+    tag.appendChild(document.createTextNode(row.sub)); r.appendChild(tag);
+    const nodes = el("div", "nodes");
+    row.nodes.forEach(id => {
+      const n = el("div", "node"); n.id = "node-" + id; n.dataset.state = "idle";
+      n.appendChild(el("div", "n-name", NODE_LABEL[id] || id));
+      n.appendChild(el("div", "n-sub", NODE_KIND[id] || ""));
+      nodes.appendChild(n);
+    });
+    r.appendChild(nodes); g.appendChild(r);
+    if (row.tag === "detect") {
+      const note = el("div", "superstep-note", "one superstep — all five run concurrently");
+      note.id = "detect-note"; g.appendChild(note);
+    }
+  });
+}
+function resetGraph() {
+  document.querySelectorAll(".node").forEach(n => {
+    n.dataset.state = "idle"; delete n.dataset.hot;
+    const sub = n.querySelector(".n-sub"); sub.textContent = NODE_KIND[n.id.slice(5)] || "";
+  });
+  const note = $("#detect-note"); if (note) note.textContent = "one superstep — all five run concurrently";
+}
+function setNode(id, state, sub, hot) {
+  const n = $("#node-" + id); if (!n) return;
+  n.dataset.state = state;
+  if (sub !== undefined) n.querySelector(".n-sub").textContent = sub;
+  if (hot !== undefined) n.dataset.hot = hot; 
+}
+
+/* ---------------- verdict ---------------- */
+function renderVerdict(d) {
+  const slot = $("#verdict-slot"); slot.innerHTML = "";
+  const v = el("div", "verdict " + d.recommended_action);
+  v.appendChild(el("div", "cls", d.final_classification));
+  v.appendChild(el("div", "arrow", "→"));
+  v.appendChild(el("div", "act", d.recommended_action));
+  const m = el("div", "metrics");
+  [["risk", f3(d.risk_score)], ["confidence", f3(d.confidence)], ["latency", Math.round(d.total_latency_ms) + " ms"]]
+    .forEach(([k, val]) => { const b = el("div", "metric"); b.appendChild(el("b", null, val));
+                             b.appendChild(el("span", null, k)); m.appendChild(b); });
+  v.appendChild(m);
+  const flags = el("div", "flagline");
+  if (d.requires_human_review) flags.appendChild(el("span", "flag", "held for analyst review"));
+  if (d.fail_safe_applied)     flags.appendChild(el("span", "flag", "fail-safe applied"));
+  (d.policy_rules_fired || []).forEach(r => flags.appendChild(el("span", "flag", r)));
+  if (flags.children.length) v.appendChild(flags);
+  slot.appendChild(v);
+}
+
+/* ---------------- agent cards ---------------- */
+function agentCard(name) {
+  let card = $("#agent-" + name);
+  if (card) return card;
+  card = el("div", "agent"); card.id = "agent-" + name;
+  const head = el("div", "a-head");
+  head.appendChild(el("div", "a-name", NODE_LABEL[name] || name));
+  head.appendChild(el("div", "a-cls", "waiting"));
+  head.appendChild(el("div", "a-score", "—"));
+  card.appendChild(head);
+  $("#agents").appendChild(card);
+  return card;
+}
+function renderAgent(v) {
+  const card = agentCard(v.agent_name);
+  card.classList.add("reported");
+  const meta = (META.agents || []).find(a => a.id === v.agent_name) || {};
+  const threshold = meta.assert_threshold ?? 0.55;
+  const floor = (v.deterministic_score || 0) * (META.fusion.deterministic_floor_ratio ?? 0.75);
+  if (v.score >= threshold) card.classList.add("fired");
+
+  card.querySelector(".a-cls").textContent = v.classification;
+  const s = card.querySelector(".a-score"); s.textContent = f3(v.score);
+  s.style.color = v.score >= threshold ? "var(--bad)" : v.score >= 0.35 ? "var(--warn)" : "var(--muted)";
+
+  card.querySelectorAll(".fusebar,.legend,.evidence,.a-foot,details").forEach(n => n.remove());
+
+  const bar = el("div", "fusebar");
+  const fill = el("div", "fill"); fill.style.width = pct(v.score); bar.appendChild(fill);
+  const mk = (cls, val, title) => {
+    const t = el("div", "tick " + cls); t.style.left = pct(val); t.title = title + " " + f3(val);
+    bar.appendChild(t);
+  };
+  mk("thr", threshold, "assert threshold");
+  if (v.deterministic_score != null) mk("det", v.deterministic_score, "deterministic (rules)");
+  if (v.llm_score != null) mk("llm", v.llm_score, "model");
+  if (floor > 0) mk("floor", floor, "deterministic floor — the model cannot push below this");
+  card.appendChild(bar);
+
+  const lg = el("div", "legend");
+  lg.innerHTML = '<span><i style="background:var(--ink)"></i>rules ' + f3(v.deterministic_score) + '</span>' +
+    '<span><i style="background:var(--accent)"></i>model ' + (v.llm_score == null ? "n/a" : f3(v.llm_score)) + '</span>' +
+    '<span><i style="background:var(--bad)"></i>floor ' + f3(floor) + '</span>' +
+    '<span><i style="background:var(--muted)"></i>threshold ' + f3(threshold) + '</span>';
+  card.appendChild(lg);
+
+  if (v.evidence && v.evidence.length) {
+    const ul = el("ul", "evidence");
+    v.evidence.slice(0, 6).forEach(line => {
+      const li = el("li", line.startsWith("(model)") ? "model" : "", line); ul.appendChild(li);
+    });
+    card.appendChild(ul);
+  }
+
+  if (v.indicators && v.indicators.length) {
+    const det = el("details");
+    det.appendChild(el("summary", null, v.indicators.length + " indicators"));
+    v.indicators.forEach(i => {
+      const row = el("div", "ind");
+      const left = el("span", null, i.id);
+      const right = el("span", "w", (i.weight ? i.weight.toFixed(2) : "—"));
+      const src = el("span", "src", i.source);
+      row.append(left, src, right); det.appendChild(row);
+    });
+    card.appendChild(det);
+  }
+
+  const foot = el("div", "a-foot");
+  foot.appendChild(el("span", null, Math.round(v.execution_time_ms) + " ms"));
+  foot.appendChild(el("span", null, "conf " + f3(v.confidence)));
+  foot.appendChild(el("span", null, (v.llm_used ? "llm: " + (v.model || "?") : "llm: skipped")));
+  const tools = [...new Set(v.tools_called || [])];
+  if (tools.length) foot.appendChild(el("span", null, tools.length + " tool calls"));
+  if (v.degraded) { const d = el("span", null, "DEGRADED"); d.style.color = "var(--bad)"; foot.appendChild(d); }
+  (v.errors || []).forEach(e => { const n = el("span", null, e); n.style.color = "var(--bad)"; foot.appendChild(n); });
+  card.appendChild(foot);
+}
+
+/* ---------------- aggregation + policy ---------------- */
+function renderAggregation(d, scores) {
+  const box = $("#agg"); box.innerHTML = "";
+  const t = el("table");
+  t.innerHTML = "<thead><tr><th>agent</th><th>class</th><th style='text-align:right'>score</th>" +
+                "<th style='text-align:right'>rules</th><th style='text-align:right'>model</th></tr></thead>";
+  const tb = el("tbody");
+  (d.agent_results || []).slice().sort((a,b) => b.score - a.score).forEach(v => {
+    const tr = el("tr"); if (v.score < 0.2) tr.className = "dim";
+    tr.innerHTML = `<td>${v.agent_name.replace("_agent","")}</td><td>${v.classification}</td>` +
+      `<td class="num">${f3(v.score)}</td><td class="num">${f3(v.deterministic_score)}</td>` +
+      `<td class="num">${v.llm_score == null ? "—" : f3(v.llm_score)}</td>`;
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); box.appendChild(t);
+
+  const top = Math.max(0, ...Object.values(scores || {}));
+  const corroborating = Object.values(scores || {}).filter(s => s >= 0.5 && s < top).length;
+  const degraded = (d.agent_results || []).filter(v => v.degraded).map(v => v.agent_name);
+  const fm = el("div", "formula");
+  fm.innerHTML =
+    `risk = max(scores) + 0.05 × corroborating<br>` +
+    `&nbsp;&nbsp;&nbsp;&nbsp; = ${f3(top)} + 0.05 × ${corroborating} = <b>${f3(d.risk_score)}</b><br>` +
+    `dominant class = <b>${d.final_classification}</b> &nbsp;·&nbsp; coverage ${(d.agent_results||[]).length}/${(META.agents||[]).length}` +
+    (degraded.length ? `<br><span style="color:var(--bad)">degraded: ${degraded.join(", ")}</span>` : "");
+  box.appendChild(fm);
+}
+
+function renderPolicy(d, rules) {
+  const box = $("#policy"); box.innerHTML = "";
+  const t = el("table");
+  t.innerHTML = "<thead><tr><th>rule</th><th>action</th><th>description</th></tr></thead>";
+  const tb = el("tbody");
+  (rules || []).forEach(r => {
+    const tr = el("tr", r.fired ? "fired" : "dim");
+    tr.innerHTML = `<td class="mono" style="font-size:11.5px">${r.id}</td><td>${r.action}</td><td>${r.description}</td>`;
+    tb.appendChild(tr);
+  });
+  (d.policy_rules_fired || []).filter(id => id.startsWith("FS")).forEach(id => {
+    const tr = el("tr", "failsafe");
+    tr.innerHTML = `<td class="mono" style="font-size:11.5px">${id}</td><td>FAIL-SAFE</td>` +
+                   `<td>analysis incomplete — escalated rather than delivered</td>`;
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); box.appendChild(t);
+
+  const fm = el("div", "formula");
+  const th = META.policy.thresholds;
+  fm.innerHTML = `thresholds &nbsp; malware ≥ ${th.malware_quarantine} · phishing ≥ ${th.phishing_quarantine} · ` +
+    `bec ≥ ${th.bec_review} · spam ≥ ${th.spam_junk} · composite ≥ ${th.composite_quarantine}<br>` +
+    `<b>the model never chooses the action</b> — these rules do, and every threshold is an env var`;
+  box.appendChild(fm);
+}
+
+/* ---------------- timeline ---------------- */
+function renderTimeline(spans, total) {
+  const box = $("#timeline"); box.innerHTML = "";
+  const max = Math.max(total, ...spans.map(s => s.end)) || 1;
+  spans.forEach(s => {
+    const row = el("div", "tl-row");
+    row.appendChild(el("div", "tl-name", NODE_LABEL[s.node] || s.node));
+    const track = el("div", "tl-track");
+    const bar = el("div", "tl-bar" + (s.node.endsWith("_agent") ? " agent" : ""));
+    bar.style.left = (s.start / max * 100) + "%";
+    bar.style.width = Math.max(0.6, (s.end - s.start) / max * 100) + "%";
+    track.appendChild(bar); row.appendChild(track);
+    const ms = s.ms ?? (s.end - s.start);
+    row.appendChild(el("div", "tl-ms", (ms < 1 ? ms.toFixed(1) : Math.round(ms)) + "ms"));
+    box.appendChild(row);
+  });
+  const agents = spans.filter(s => s.node.endsWith("_agent"));
+  if (agents.length > 1) {
+    const sum = agents.reduce((a, s) => a + (s.ms ?? (s.end - s.start)), 0);
+    const span = Math.max(...agents.map(s => s.end)) - Math.min(...agents.map(s => s.start));
+    box.appendChild(el("div", "tl-caption",
+      `The ${agents.length} detection agents did ${Math.round(sum)} ms of work inside a single ${Math.round(span)} ms ` +
+      `superstep — they overlap because of the fan-out. Run sequentially, the bars would form a staircase. ` +
+      `The gaps between rows are Agent Framework superstep boundaries, not agent time.`));
+  }
+}
+
+/* ---------------- log ---------------- */
+function logLine(kind, text) {
+  const box = $("#log");
+  if (box.querySelector(".empty")) box.innerHTML = "";
+  const d = el("div"); d.innerHTML = `<span>${kind}</span> ${text}`;
+  box.appendChild(d); box.scrollTop = box.scrollHeight;
+}
+
+/* ---------------- run ---------------- */
+let running = false;
+async function run() {
+  if (running) return;
+  const errBox = $("#editor-err"); errBox.classList.remove("show");
+  let payload;
+  try { payload = JSON.parse($("#editor").value); }
+  catch (e) { errBox.textContent = "Invalid JSON: " + e.message; errBox.classList.add("show"); return; }
+
+  running = true; $("#btn-run").disabled = true; $("#btn-run").textContent = "Analyzing…";
+  resetGraph();
+  $("#agents").innerHTML = ""; $("#agents-card").hidden = false;
+  $("#verdict-slot").innerHTML = ""; $("#panels").hidden = true; $("#timeline-card").hidden = true;
+  $("#log").innerHTML = "";
+
+  const source = (payload.body && payload.from) || payload.internetMessageId ? "graph" : "json";
+  const spans = []; const open = {};
+
+  try {
+    const res = await fetch("/api/analyze", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: payload, source }),
+    });
+    if (!res.ok) {
+      const detail = await res.json().catch(() => ({ detail: res.statusText }));
+      throw new Error(detail.detail || res.statusText);
+    }
+
+    const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const parts = buf.split("\n\n"); buf = parts.pop();
+      for (const chunk of parts) {
+        const evMatch = chunk.match(/^event: (.+)$/m);
+        const dataMatch = chunk.match(/^data: (.+)$/m);
+        if (!evMatch || !dataMatch) continue;
+        handleEvent(evMatch[1], JSON.parse(dataMatch[1]), spans, open);
+      }
+    }
+  } catch (e) {
+    errBox.textContent = "Analysis failed: " + e.message; errBox.classList.add("show");
+    logLine("error", e.message);
+  } finally {
+    running = false; $("#btn-run").disabled = false; $("#btn-run").textContent = "Analyze";
+  }
+}
+
+function handleEvent(kind, data, spans, open) {
+  if (kind === "run_started") {
+    setNode("ingestion", "done", (data.urls?.length || 0) + " urls · " + (data.attachments?.length || 0) + " attach", undefined);
+    logLine("run", `${data.message_id} — ${data.provider} (${data.model})`);
+  } else if (kind === "superstep") {
+    if (data.phase === "started") logLine("superstep", "#" + data.index + " started");
+  } else if (kind === "node_started") {
+    setNode(data.node, "running", "running…");
+    open[data.node] = data.at;
+    logLine("invoked", data.node);
+  } else if (kind === "node_completed") {
+    const start = open[data.node] ?? data.at;
+    spans.push({ node: data.node, start, end: data.at,
+                 ms: data.verdict ? data.verdict.execution_time_ms : (data.at - start) });
+    delete open[data.node];
+    if (data.verdict) {
+      const v = data.verdict;
+      const meta = (META.agents || []).find(a => a.id === v.agent_name) || {};
+      const thr = meta.assert_threshold ?? 0.55;
+      setNode(data.node, "done", f3(v.score), v.score >= thr ? "1" : v.score >= 0.35 ? "2" : "0");
+      renderAgent(v);
+      logLine("verdict", `${v.agent_name} = ${f3(v.score)} (${v.classification})`);
+    } else {
+      setNode(data.node, "done", "@" + Math.round(data.at) + " ms");
+      logLine("completed", data.node);
+    }
+  } else if (kind === "node_failed") {
+    setNode(data.node, "failed", "failed");
+    logLine("failed", data.node + " — " + data.error);
+  } else if (kind === "awaiting_human") {
+    setNode("human_review", "running", "awaiting analyst");
+    logLine("suspended", "workflow paused for human review");
+  } else if (kind === "decision") {
+    const d = data.decision;
+    renderVerdict(d);
+    renderAggregation(d, data.scores);
+    renderPolicy(d, data.policy_rules_all);
+    $("#panels").hidden = false;
+    renderTimeline(spans, data.at);
+    $("#timeline-card").hidden = false;
+    logLine("decision", `${d.final_classification} → ${d.recommended_action} (risk ${f3(d.risk_score)})`);
+  } else if (kind === "error") {
+    logLine("error", data.message);
+  } else if (kind === "done") {
+    ["human_review", "final_decision"].forEach(id => {
+      const n = $("#node-" + id);
+      if (n && n.dataset.state === "idle") n.querySelector(".n-sub").textContent = "branch not taken";
+    });
+    logLine("done", Math.round(data.at) + " ms total");
+  }
+}
+
+/* ---------------- boot ---------------- */
+async function boot() {
+  buildGraph();
+  META = await (await fetch("/api/meta")).json();
+  const b = $("#provider-badge");
+  b.textContent = META.provider.name + " · " + META.provider.model;
+  b.className = "badge " + (META.provider.is_stub ? "stub" : "live");
+  b.title = META.provider.is_stub
+    ? "No language model is running. Verdicts come from the deterministic tool+rule layer only. Set LLM_PROVIDER=ollama for real reasoning."
+    : META.provider.detail;
+
+  const sel = $("#sample-select");
+  const list = await (await fetch("/api/samples")).json();
+  const groups = {};
+  list.forEach(s => { (groups[s.group] ||= []).push(s); });
+  Object.entries(groups).forEach(([name, items]) => {
+    const og = el("optgroup"); og.label = name;
+    items.forEach(s => {
+      const o = el("option", null, `${s.id} — ${(s.subject || "").slice(0, 46)}`);
+      o.value = s.id; o.dataset.note = s.label ? `ground truth: ${s.label} / ${s.expected_action}${s.difficulty ? " (" + s.difficulty + ")" : ""}. ${s.notes || ""}` : (s.notes || "");
+      og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+
+  sel.addEventListener("change", async () => {
+    if (!sel.value) return;
+    const data = await (await fetch("/api/samples/" + encodeURIComponent(sel.value))).json();
+    $("#editor").value = JSON.stringify(data, null, 2);
+    const note = sel.selectedOptions[0].dataset.note;
+    const box = $("#sample-note"); box.hidden = !note; box.textContent = note || "";
+  });
+
+  $("#btn-run").addEventListener("click", run);
+  $("#btn-graph").addEventListener("click", () => {
+    const w = window.open("", "_blank", "width=720,height=760");
+    w.document.write("<pre style='font:12px ui-monospace,monospace;padding:20px;white-space:pre-wrap'>" +
+      META.mermaid.replace(/[<>&]/g, c => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c])) +
+      "</pre><p style='font:13px system-ui;padding:0 20px;color:#666'>Paste into mermaid.live to render.</p>");
+  });
+  document.addEventListener("keydown", e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") { e.preventDefault(); run(); }
+  });
+
+  sel.value = "phish-001"; sel.dispatchEvent(new Event("change"));
+}
+boot();
+</script>
+</body>
+</html>

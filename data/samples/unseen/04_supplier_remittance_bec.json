@@ -1,0 +1,28 @@
+{
+  "message_id": "u-04",
+  "sender": "\"Fabrikam Finance\" <finance.fabrikam@gmail.com>",
+  "reply_to": "finance.fabrikam@gmail.com",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "Re: October remittance — updated account",
+  "body_text": "Hi Alex,\n\nOur finance team has moved banks. Please update the payment instructions on file and route the October remittance of $27,300.00 to the new account below.\n\nIBAN: NL91 ABNA 0417 1643 00\nBIC: ABNANL2A\n\nPlease don't discuss this over the phone, our line is being migrated this week.\n\nFabrikam Finance",
+  "headers": {
+    "Authentication-Results": "spf=pass smtp.mailfrom=gmail.com; dkim=pass header.d=gmail.com; dmarc=pass (p=reject)",
+    "DKIM-Signature": "v=1; a=rsa-sha256; d=gmail.com; s=s1"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}

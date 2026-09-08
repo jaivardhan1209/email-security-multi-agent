@@ -1,0 +1,29 @@
+{
+  "message_id": "u-02",
+  "sender": "\"Microsoft Teams\" <noreply@teams-microsoft-notify.cyou>",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "You have 2 missed Teams calls and 1 voicemail",
+  "body_html": "<html><body><p>Hi Alex,</p><p>You have unheard voicemail in Microsoft Teams. Sign in with your work account to listen.</p><p><a href='https://teams-microsoft-notify.cyou/auth?upn=alex.morgan@contoso.com'>https://teams.microsoft.com/voicemail</a></p><p>This message will be deleted in 24 hours.</p></body></html>",
+  "urls": [
+    "https://teams-microsoft-notify.cyou/auth?upn=alex.morgan@contoso.com"
+  ],
+  "headers": {
+    "Authentication-Results": "spf=fail smtp.mailfrom=teams-microsoft-notify.cyou; dkim=none; dmarc=fail (p=reject)"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}

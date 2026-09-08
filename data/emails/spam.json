@@ -1,0 +1,315 @@
+[
+  {
+    "email": {
+      "message_id": "spam-001",
+      "sender": "\"MegaDeals Outlet\" <offers@megadeals-outlet.top>",
+      "subject": "FINAL HOURS!!! 70% OFF EVERYTHING — TODAY ONLY!!!",
+      "body_text": "Dear Customer,\n\nOur biggest FLASH SALE of the year ends TONIGHT! Get 70% off everything, free shipping, and a free gift with every order. Buy now before supplies last!\n\nGuaranteed money-back. No obligation.\n\nShop now: http://megadeals-outlet.top/sale",
+      "urls": [
+        "http://megadeals-outlet.top/sale"
+      ],
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      },
+      "headers": {}
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "normal",
+    "notes": "Textbook promotional spam on an abused TLD, no unsubscribe."
+  },
+  {
+    "email": {
+      "message_id": "spam-002",
+      "sender": "\"Dr. Health Solutions\" <info@healthboost-now.xyz>",
+      "subject": "Lose 14kg in 3 weeks — doctors are stunned",
+      "body_text": "Congratulations! You have been selected for our exclusive weight loss trial.\n\nThis risk-free CBD formula is changing lives. Limited time offer, claim your free trial today!\n\nhttp://healthboost-now.xyz/trial",
+      "urls": [
+        "http://healthboost-now.xyz/trial"
+      ],
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      },
+      "headers": {}
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "normal",
+    "notes": "Classic health/supplement spam vertical."
+  },
+  {
+    "email": {
+      "message_id": "spam-003",
+      "sender": "\"Marcus @ GrowthLeads\" <marcus@growthleads-agency.com>",
+      "subject": "Quick question about Contoso's SEO",
+      "body_text": "Hi,\n\nI ran a quick audit of contoso.com and found 34 broken backlinks hurting your ranking.\n\nWe do guest posts and lead generation for B2B SaaS companies. Would you be open to a 15-minute call this week to see how we could increase your traffic?\n\nBest,\nMarcus\nGrowthLeads Agency",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=growthleads-agency.com; dkim=pass header.d=growthleads-agency.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=growthleads-agency.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "borderline",
+    "notes": "Authenticated, well-written, personalised cold outreach. Unsolicited bulk but not malicious — the hardest spam case."
+  },
+  {
+    "email": {
+      "message_id": "spam-004",
+      "sender": "\"Prize Notification Centre\" <claims@intl-lottery-winners.click>",
+      "subject": "CONGRATULATIONS!!! YOU HAVE WON $2,500,000",
+      "body_text": "ATTENTION LUCKY WINNER!!!\n\nYour email address was selected in our international sweepstake draw. You have won $2,500,000.00!!!\n\nTo claim your prize, reply with your full name, address and bank account details within 48 hours.\n\nCongratulations once again!",
+      "reply_to": "claims.dept.intl@gmail.com",
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      },
+      "headers": {}
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "normal",
+    "notes": "Advance-fee/lottery scam. Overlaps with fraud, but the dominant characteristic is bulk scam mail."
+  },
+  {
+    "email": {
+      "message_id": "spam-005",
+      "sender": "\"Crypto Signals Pro\" <alerts@forexsignals-elite.win>",
+      "subject": "Turn $250 into $18,000 — passive income system",
+      "body_text": "Make money while you sleep!\n\nOur bitcoin trading bot has a 94% win rate. Work from home and earn $5000 per week with financial freedom. Guaranteed returns.\n\nStart now: http://forexsignals-elite.win/start",
+      "urls": [
+        "http://forexsignals-elite.win/start"
+      ],
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      },
+      "headers": {}
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "normal",
+    "notes": "Get-rich-quick / crypto spam."
+  },
+  {
+    "email": {
+      "message_id": "spam-006",
+      "sender": "\"Conference Invitations\" <secretariat@global-summits-2025.info>",
+      "subject": "Invitation to speak at the 14th Global Innovation Summit",
+      "body_text": "Dear Esteemed Professional,\n\nFollowing a review of your distinguished profile, the organising committee cordially invites you to present at our summit in Dubai.\n\nRegistration fee: $890. Early bird discount 20% off if you register within 7 days.\n\nWe await your favourable response.",
+      "headers": {
+        "Precedence": "bulk",
+        "X-Campaign-Id": "GIS-2025-Q3-batch14"
+      },
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "borderline",
+    "notes": "Predatory conference spam — polite, formal, and entirely unsolicited bulk."
+  },
+  {
+    "email": {
+      "message_id": "spam-007",
+      "sender": "\"Office Supplies Direct\" <sales@officesupplies-direct.com>",
+      "subject": "Your printer toner is running low",
+      "body_text": "Hello,\n\nOur records suggest your office may be due a toner refill. We supply compatible cartridges at 40% off the manufacturer price, with free next-day shipping.\n\nOrder now and save. Reply STOP to opt out.",
+      "headers": {
+        "Precedence": "bulk"
+      },
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "borderline",
+    "notes": "Low-key commercial spam with a false pretext of an existing relationship."
+  },
+  {
+    "email": {
+      "message_id": "spam-008",
+      "sender": "\"Lucky Spins Casino\" <vip@luckyspins-casino.bet>",
+      "subject": "🎰 200 FREE SPINS waiting for you!!!",
+      "body_html": "<html><body style='background:#111'><img src='cid:banner1'><p style='color:#ffffff;background:#ffffff;font-size:0px'>casino gambling bonus deposit</p><p><a href='http://luckyspins-casino.bet/claim'>CLAIM NOW</a></p></body></html>",
+      "urls": [
+        "http://luckyspins-casino.bet/claim"
+      ],
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      },
+      "headers": {}
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "normal",
+    "notes": "Gambling spam using white-on-white hidden text and an image-only body to evade content filters."
+  },
+  {
+    "email": {
+      "message_id": "spam-009",
+      "sender": "\"Career Opportunities\" <hr@remote-jobs-network.ml>",
+      "subject": "U​r​g​e​n​t: Work From Home Position — $45/hour",
+      "body_text": "Hello,\n\nWe found your CV and would like to offer you a rem​ote data entry position paying $45 per hour. No experience needed. Start immediately!\n\nReply with your details to begin.",
+      "recipients": [],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      },
+      "headers": {}
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "normal",
+    "notes": "Employment spam using zero-width characters inside words to defeat keyword matching."
+  },
+  {
+    "email": {
+      "message_id": "spam-010",
+      "sender": "\"Wellness Weekly\" <news@wellnessweekly-digest.com>",
+      "subject": "5 stretches for desk workers + our new sleep guide",
+      "body_html": "<html><body><p>Hi there,</p><p>This week: five stretches you can do at your desk, and our brand new sleep guide (free for subscribers).</p><p><a href='https://wellnessweekly-digest.com/issue/88'>Read this week's issue</a></p><p style='font-size:11px'>You received this because you signed up. <a href='https://wellnessweekly-digest.com/unsub'>Unsubscribe</a></p></body></html>",
+      "urls": [
+        "https://wellnessweekly-digest.com/issue/88",
+        "https://wellnessweekly-digest.com/unsub"
+      ],
+      "headers": {
+        "List-Unsubscribe": "<https://wellnessweekly-digest.com/unsub>",
+        "Precedence": "bulk",
+        "Authentication-Results": "spf=pass smtp.mailfrom=wellnessweekly-digest.com; dkim=pass header.d=wellnessweekly-digest.com; dmarc=pass (p=none)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "SPAM",
+    "expected_action": "JUNK",
+    "difficulty": "hard",
+    "notes": "Graymail: authenticated, well-formed, working unsubscribe, but the recipient never knowingly subscribed. Deliberately near-indistinguishable from leg-006."
+  }
+]

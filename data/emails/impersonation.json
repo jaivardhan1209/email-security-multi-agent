@@ -1,0 +1,328 @@
+[
+  {
+    "email": {
+      "message_id": "imp-001",
+      "sender": "\"Microsoft 365 Message Center\" <mc@microsoft-m365-updates.com>",
+      "subject": "Service advisory: mailbox migration window",
+      "body_text": "This is an advisory notice for Microsoft 365 tenant administrators.\n\nYour tenant is scheduled for a mailbox migration between 12 and 19 September. No action is required.\n\nMicrosoft 365 Message Center",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=microsoft-m365-updates.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "borderline",
+    "notes": "Brand impersonation with no payload at all — no link, no attachment, no credential ask. Quarantining is disproportionate; a human should look."
+  },
+  {
+    "email": {
+      "message_id": "imp-002",
+      "sender": "\"Robert Chen\" <r.chen@contoso.com.co>",
+      "subject": "Introduction — new advisory board member",
+      "body_text": "Team,\n\nI'd like to introduce Daniel Okafor, who is joining our advisory board this quarter. Daniel will be reaching out to some of you directly over the next two weeks.\n\nRobert Chen\nCEO",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=contoso.com.co; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "hard",
+    "notes": "Executive impersonation on a .com.co lookalike, setting up a later attack. The message itself asks for nothing."
+  },
+  {
+    "email": {
+      "message_id": "imp-003",
+      "sender": "\"Apple Support\" <support@apple-id-services.xyz>",
+      "subject": "About your Apple ID",
+      "body_text": "Hello,\n\nWe are contacting Apple ID holders about an upcoming change to our terms of service, effective 1 October.\n\nNo action is required at this time.\n\nApple Support",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=apple-id-services.xyz; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "normal",
+    "notes": "Brand impersonation used to warm up the recipient before a follow-up."
+  },
+  {
+    "email": {
+      "message_id": "imp-004",
+      "sender": "\"Maria Alvarez\" <maria.alvarez@fabrikam.com>",
+      "subject": "Coffee next week?",
+      "body_text": "Hi Alex,\n\nLong time. I've moved over to Fabrikam and wondered if you're free for a coffee next week?\n\nMaria",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=fabrikam.com; dkim=pass header.d=fabrikam.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=fabrikam.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "hard",
+    "notes": "Uses a real internal executive's name from a real, authenticated partner domain. Only the org context makes it suspicious. Deliberately ambiguous: people do change employer."
+  },
+  {
+    "email": {
+      "message_id": "imp-005",
+      "sender": "\"Contoso Security Team\" <security@contoso-secure.net>",
+      "subject": "Reminder: annual security awareness training",
+      "body_text": "Hello,\n\nThis is a reminder that your annual security awareness training is due this month. Your manager has been copied.\n\nContoso Security Team",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=contoso-secure.net; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "borderline",
+    "notes": "Internal-team impersonation on a plausible sibling domain."
+  },
+  {
+    "email": {
+      "message_id": "imp-006",
+      "sender": "\"Google Workspace\" <no-reply@g00gle-workspace.com>",
+      "subject": "Your storage plan is changing",
+      "body_text": "Hi,\n\nWe are updating storage allocations for Workspace customers in your region from 1 November. Your current usage is within the new limit.\n\nThe Google Workspace Team",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=g00gle-workspace.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "normal",
+    "notes": "Homoglyph brand domain (g00gle) with entirely benign body text."
+  },
+  {
+    "email": {
+      "message_id": "imp-007",
+      "sender": "\"Sonia Bright — Northwind\" <sonia.bright@northwlnd-traders.com>",
+      "subject": "New account manager for Contoso",
+      "body_text": "Hi Alex,\n\nI'm handing the Contoso account over to my colleague Tom Redding from next month. He'll be in touch to introduce himself.\n\nBest,\nSonia",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=northwlnd-traders.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "hard",
+    "notes": "Vendor impersonation on a homoglyph domain (northwlnd), pre-positioning a fake contact for a later payment diversion."
+  },
+  {
+    "email": {
+      "message_id": "imp-008",
+      "sender": "\"HM Revenue & Customs\" <noreply@hmrc-gov-uk.services>",
+      "subject": "Important information about your business tax account",
+      "body_text": "Dear customer,\n\nWe are writing about your business tax account. Details of the change will follow in a separate letter.\n\nHM Revenue & Customs",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=hmrc-gov-uk.services; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "IMPERSONATION",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "borderline",
+    "notes": "Government-body impersonation without a payload."
+  },
+  {
+    "email": {
+      "message_id": "imp-009",
+      "sender": "\"Priya Nandan\" <priya.nandan@contoso.com>",
+      "subject": "Fwd: conference invite — worth a look?",
+      "body_text": "Alex — this came through to me, might be more relevant to your team than mine. Ignore if not.\n\nPriya\n\n---------- Forwarded message ----------\nFrom: Conference Invitations <secretariat@global-summits-2025.info>\nSubject: Invitation to speak at the 14th Global Innovation Summit",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "hard",
+    "notes": "CONTROL CASE: an authenticated internal colleague forwarding spam. The forwarded content is junk; the message itself is legitimate."
+  },
+  {
+    "email": {
+      "message_id": "imp-010",
+      "sender": "\"Netflix\" <info@netflix.com>",
+      "subject": "Your membership renews on 12 September",
+      "body_text": "Hi Alex,\n\nJust a reminder that your Netflix membership renews on 12 September at the current price.\n\nManage your membership at https://www.netflix.com/youraccount\n\nThe Netflix Team",
+      "urls": [
+        "https://www.netflix.com/youraccount"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=netflix.com; dkim=pass header.d=netflix.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=netflix.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "borderline",
+    "notes": "CONTROL CASE: a genuine, authenticated brand notification. Present to check that brand-impersonation logic does not fire on real brands."
+  }
+]

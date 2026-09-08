@@ -1,0 +1,30 @@
+{
+  "message_id": "u-08",
+  "sender": "\"AWS Billing\" <no-reply@amazon.com>",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "Your AWS bill for September is now available",
+  "body_text": "Greetings from AWS,\n\nYour invoice for September is available. Total: $8,412.66, charged to the payment method on file on 3 October.\n\nView your bill: https://www.amazon.com/billing\n\nAmazon Web Services",
+  "urls": [
+    "https://www.amazon.com/billing"
+  ],
+  "headers": {
+    "Authentication-Results": "spf=pass smtp.mailfrom=amazon.com; dkim=pass header.d=amazon.com; dmarc=pass (p=reject)",
+    "DKIM-Signature": "v=1; a=rsa-sha256; d=amazon.com; s=s1"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}

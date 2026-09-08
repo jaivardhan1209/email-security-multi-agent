@@ -1,0 +1,17 @@
+{
+  "message_id": "sample-002",
+  "sender": "\"Priya Nandan\" <priya.nandan@contoso.com>",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "Re: Q3 forecast review \u2014 moving to Thursday",
+  "body_text": "Hi Alex,\n\nThursday 10:00 works better for the team so I've moved the review. Deck is in the usual folder.\n\nPriya",
+  "headers": {
+    "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ]
+  }
+}

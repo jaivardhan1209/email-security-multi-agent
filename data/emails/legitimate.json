@@ -1,0 +1,363 @@
+[
+  {
+    "email": {
+      "message_id": "leg-001",
+      "sender": "\"Microsoft account team\" <account-security-noreply@accountprotection.microsoft.com>",
+      "subject": "New sign-in to your Microsoft account",
+      "body_text": "Hi Alex,\n\nWe noticed a new sign-in to your Microsoft account from Chrome on Windows in Seattle, WA on 3 September.\n\nIf this was you, no action is needed. If you don't recognise this activity, review your recent activity at https://account.microsoft.com/security and change your password.\n\nThanks,\nThe Microsoft account team",
+      "urls": [
+        "https://account.microsoft.com/security"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=microsoft.com; dkim=pass header.d=microsoft.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=microsoft.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "borderline",
+    "notes": "Genuine security notification. Contains sign-in/password language and a security link, which is exactly what a phishing lure imitates."
+  },
+  {
+    "email": {
+      "message_id": "leg-002",
+      "sender": "\"Priya Nandan\" <priya.nandan@contoso.com>",
+      "subject": "Re: Q3 forecast review — moving to Thursday",
+      "body_text": "Hi Alex,\n\nThursday 10:00 works better for most of the team, so I've moved the forecast review. The deck is in the usual SharePoint folder; I've added the updated pipeline numbers on slide 6.\n\nShout if that clashes with the customer call.\n\nPriya",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "normal",
+    "notes": "Ordinary internal thread."
+  },
+  {
+    "email": {
+      "message_id": "leg-003",
+      "sender": "\"GitHub\" <noreply@github.com>",
+      "subject": "[contoso/payments] Pull request #3184 needs your review",
+      "body_text": "@alex-morgan requested your review on pull request #3184 'Harden webhook signature validation'.\n\nView it on GitHub: https://github.com/contoso/payments/pull/3184\n\nYou are receiving this because you were requested to review.\nUnsubscribe: https://github.com/settings/notifications",
+      "urls": [
+        "https://github.com/contoso/payments/pull/3184",
+        "https://github.com/settings/notifications"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=github.com; dkim=pass header.d=github.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=github.com; s=selector1",
+        "List-Unsubscribe": "<https://github.com/settings/notifications>"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "normal",
+    "notes": "Transactional developer notification with unsubscribe header."
+  },
+  {
+    "email": {
+      "message_id": "leg-004",
+      "sender": "\"Northwind Traders Accounts\" <ar@northwind-traders.com>",
+      "subject": "Invoice NT-88421 for August services",
+      "body_text": "Dear Accounts Payable,\n\nPlease find attached invoice NT-88421 for August professional services, total $18,400.00, payable within 30 days to the account already on file. Our banking details are unchanged.\n\nAny queries, reply to this address or call the number on the invoice.\n\nRegards,\nSonia Bright\nNorthwind Traders",
+      "attachments": [
+        {
+          "filename": "Invoice_NT-88421.pdf",
+          "content_type": "application/pdf",
+          "size_bytes": 214338
+        }
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=northwind-traders.com; dkim=pass header.d=northwind-traders.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=northwind-traders.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "borderline",
+    "notes": "Real vendor invoice from an established, authenticated vendor domain. Explicitly states banking details are unchanged."
+  },
+  {
+    "email": {
+      "message_id": "leg-005",
+      "sender": "\"Zoom\" <no-reply@zoom.us>",
+      "subject": "Your meeting recording is ready",
+      "body_text": "Hi Alex,\n\nYour cloud recording for 'Contoso weekly sync' (2 September, 45 min) is ready.\n\nView recording: https://zoom.us/rec/share/8f2a91\n\nThis link expires in 30 days.\n\nThe Zoom Team",
+      "urls": [
+        "https://zoom.us/rec/share/8f2a91"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=zoom.us; dkim=pass header.d=zoom.us; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=zoom.us; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "normal",
+    "notes": "Routine SaaS notification."
+  },
+  {
+    "email": {
+      "message_id": "leg-006",
+      "sender": "\"The Pragmatic Engineer\" <newsletter@substack.com>",
+      "subject": "Issue #241: How large teams do incident review",
+      "body_html": "<html><body><h1>Issue #241</h1><p>This week: how four large engineering organisations run blameless incident review, and what they measure afterwards. Read the full issue on the web.</p><p><a href='https://substack.com/p/issue-241'>Read online</a></p><p style='font-size:11px'><a href='https://substack.com/unsubscribe/abc123'>Unsubscribe</a> | You are receiving this because you subscribed in 2023.</p></body></html>",
+      "urls": [
+        "https://substack.com/p/issue-241",
+        "https://substack.com/unsubscribe/abc123"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=substack.com; dkim=pass header.d=substack.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=substack.com; s=selector1",
+        "List-Unsubscribe": "<https://substack.com/unsubscribe/abc123>",
+        "List-Id": "pragmatic-engineer.substack.com",
+        "Precedence": "bulk"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "borderline",
+    "notes": "Opted-in bulk newsletter. Has every structural marker of bulk mail but is wanted mail, so it must not be junked."
+  },
+  {
+    "email": {
+      "message_id": "leg-007",
+      "sender": "\"Contoso IT Service Desk\" <servicedesk@contoso.com>",
+      "subject": "Scheduled maintenance: VPN gateway, Saturday 06:00-08:00 UTC",
+      "body_text": "Team,\n\nThe VPN gateway will be unavailable on Saturday between 06:00 and 08:00 UTC for a firmware update. No action is required from you. Remote access will resume automatically.\n\nWe will never ask you for your password. If you receive a message asking you to re-enter credentials, report it using the Report Phishing button.\n\nContoso IT Service Desk",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "borderline",
+    "notes": "Internal IT notice that mentions passwords and credentials — a naive keyword filter would flag it."
+  },
+  {
+    "email": {
+      "message_id": "leg-008",
+      "sender": "\"Amazon.com\" <shipment-tracking@amazon.com>",
+      "subject": "Your package has shipped",
+      "body_text": "Hello Alex Morgan,\n\nYour order #114-3392847-2210 has shipped and is expected to arrive on Friday.\n\nTrack your package: https://www.amazon.com/gp/css/order-history\n\nThanks for shopping with us.",
+      "urls": [
+        "https://www.amazon.com/gp/css/order-history"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=amazon.com; dkim=pass header.d=amazon.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=amazon.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "normal",
+    "notes": "Genuine transactional retail mail."
+  },
+  {
+    "email": {
+      "message_id": "leg-009",
+      "sender": "\"Maria Alvarez\" <maria.alvarez@contoso.com>",
+      "subject": "Approved: PO-2291 for the Fabrikam renewal",
+      "body_text": "Alex,\n\nI've approved PO-2291 for the Fabrikam licence renewal, $42,000.00 against the FY25 platform budget. Finance has the signed copy. Please raise the payment through the normal AP workflow — no rush, it's due on the 30th.\n\nMaria Alvarez\nCFO, Contoso",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "borderline",
+    "notes": "Genuine executive message about a large payment. Distinguished from BEC by authentication, internal domain, no urgency, no secrecy, and routing through normal process."
+  },
+  {
+    "email": {
+      "message_id": "leg-010",
+      "sender": "\"DocuSign\" <dse@docusign.net>",
+      "subject": "Please DocuSign: Contoso-Fabrikam MSA 2025",
+      "body_text": "Maria Alvarez sent you a document to review and sign.\n\nReview Document: https://www.docusign.com/signing/8fa2b19c\n\nDo not share this email. It contains a secure link to DocuSign.",
+      "urls": [
+        "https://www.docusign.com/signing/8fa2b19c"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=docusign.com; dkim=pass header.d=docusign.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=docusign.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "borderline",
+    "notes": "Legitimate e-signature request — the single most imitated legitimate email pattern."
+  }
+]

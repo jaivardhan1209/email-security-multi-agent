@@ -1,0 +1,336 @@
+[
+  {
+    "email": {
+      "message_id": "bec-001",
+      "sender": "\"Robert Chen\" <r.chen.contoso@gmail.com>",
+      "reply_to": "r.chen.contoso@gmail.com",
+      "subject": "Are you at your desk?",
+      "body_text": "Alex,\n\nAre you at your desk? I need you to handle something for me urgently. I'm in back-to-back meetings so I can't take a call.\n\nRobert Chen\nCEO, Contoso\nSent from my iPhone",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=gmail.com; dkim=pass header.d=gmail.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=gmail.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "borderline",
+    "notes": "Stage-one engagement probe. No payload, no link, no financial ask yet, and it passes SPF because the attacker owns the mailbox."
+  },
+  {
+    "email": {
+      "message_id": "bec-002",
+      "sender": "\"Robert Chen (CEO)\" <ceo.robert.chen@outlook.com>",
+      "reply_to": "ceo.robert.chen@outlook.com",
+      "subject": "Urgent wire — confidential acquisition",
+      "body_text": "Alex,\n\nWe are closing an acquisition and I need a wire transfer of $148,500.00 sent to the escrow account today before 16:00.\n\nBeneficiary: Meridian Escrow Services\nIBAN: GB29 NWBK 6016 1331 9268 19\nSWIFT: NWBKGB2L\n\nKeep this confidential — do not discuss it with anyone until the announcement. I'm travelling and cannot take calls.\n\nRobert",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=outlook.com; dkim=pass header.d=outlook.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=outlook.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "normal",
+    "notes": "Full CEO-fraud triad: asserted authority, wire request, verification suppressed."
+  },
+  {
+    "email": {
+      "message_id": "bec-003",
+      "sender": "\"Sonia Bright\" <s.bright@northwind-traders.co>",
+      "reply_to": "accounts@northwind-traders.co",
+      "subject": "Re: Invoice NT-88421 — updated remittance details",
+      "body_text": "Hi Alex,\n\nFollowing our banking migration, please note our remittance details have changed. Kindly update your records and route the outstanding payment for invoice NT-88421 to the new account below.\n\nAccount name: Northwind Traders Ltd\nSort code: 60-16-13\nAccount number: 31926819\n\nPlease confirm once the change is applied.\n\nRegards,\nSonia Bright\nNorthwind Traders",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=northwind-traders.co; dkim=pass header.d=northwind-traders.co; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=northwind-traders.co; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "hard",
+    "notes": "Vendor-impersonation payment diversion. northwind-traders.co is one character from the real .com vendor and passes its own SPF. Directly mirrors the legitimate leg-004 invoice."
+  },
+  {
+    "email": {
+      "message_id": "bec-004",
+      "sender": "\"Maria Alvarez\" <maria.alvarez@contos0.com>",
+      "reply_to": "m.alvarez.finance@gmail.com",
+      "subject": "Payment run — hold and re-issue",
+      "body_text": "Alex,\n\nPlease hold today's payment run. Two of the supplier bank details are out of date and I've attached the corrections separately.\n\nRe-issue the Fabrikam payment ($42,000) to the updated account only. Handle this discreetly, I don't want it discussed in the finance channel until reconciliation.\n\nMaria Alvarez\nCFO",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contos0.com; dkim=pass header.d=contos0.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contos0.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "normal",
+    "notes": "CFO impersonation on a homoglyph domain with replies redirected to a consumer mailbox."
+  },
+  {
+    "email": {
+      "message_id": "bec-005",
+      "sender": "\"Alex Morgan\" <a.morgan.personal@gmail.com>",
+      "subject": "Payroll — change of bank details",
+      "body_text": "Hi HR,\n\nI've switched banks and would like my salary paid into my new account from this month.\n\nAccount number: 88410276\nSort code: 20-45-45\n\nI'm working from home today so email is best.\n\nThanks,\nAlex",
+      "recipients": [
+        "payroll@contoso.com"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=gmail.com; dkim=pass header.d=gmail.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=gmail.com; s=selector1"
+      },
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "borderline",
+    "notes": "Payroll diversion: employee impersonation from a consumer mailbox."
+  },
+  {
+    "email": {
+      "message_id": "bec-006",
+      "sender": "\"Robert Chen\" <robert.chen@contoso-group.com>",
+      "reply_to": "robert.chen@contoso-group.com",
+      "subject": "Quick favour — client gift cards",
+      "body_text": "Alex,\n\nI need a quick favour. I want to surprise the team with gift cards for the quarter close. Can you buy 12 x $200 Apple gift cards today and send me the codes? I'll approve the expense on Monday.\n\nKeep it between us, it's meant to be a surprise. I'm in a meeting so email me the codes.\n\nRobert",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contoso-group.com; dkim=pass header.d=contoso-group.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso-group.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "normal",
+    "notes": "Gift-card scam using a plausible sibling-domain and a secrecy pretext."
+  },
+  {
+    "email": {
+      "message_id": "bec-007",
+      "sender": "\"Legal — Dawson & Wray LLP\" <j.wray@dawsonwray-legal.info>",
+      "subject": "Confidential: pending litigation settlement",
+      "body_text": "Dear Mr Morgan,\n\nWe act for a party in a confidential matter involving Contoso. Our client has agreed a settlement requiring a payment of $96,000 to our client account by close of business Friday.\n\nGiven the sensitivity, please do not discuss this with colleagues outside the finance function until the agreement is executed. Mr Chen is aware and has authorised the transfer.\n\nYours faithfully,\nJ. Wray\nDawson & Wray LLP",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=dawsonwray-legal.info; dkim=pass header.d=dawsonwray-legal.info; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=dawsonwray-legal.info; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "borderline",
+    "notes": "Lawyer-impersonation fraud: external authority, confidentiality, hard deadline."
+  },
+  {
+    "email": {
+      "message_id": "bec-008",
+      "sender": "\"Fabrikam Billing\" <billing@fabrikam-invoicing.com>",
+      "subject": "Re: FW: Outstanding balance — account CTS-4410",
+      "body_text": "Hi Alex,\n\nFollowing up on the thread below — the balance of $31,750 on account CTS-4410 remains outstanding and is now past due.\n\nPlease remit to our new banking coordinates:\nIBAN: DE89 3704 0044 0532 0130 00\nBIC: COBADEFFXXX\n\n> On 28 August, Alex Morgan wrote:\n> Thanks, I'll get that scheduled.\n\nRegards,\nFabrikam Billing",
+      "headers": {
+        "Authentication-Results": "spf=fail smtp.mailfrom=fabrikam-invoicing.com; dkim=none; dmarc=fail (p=reject)"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "BEC",
+    "expected_action": "HIGH_RISK_REVIEW",
+    "difficulty": "hard",
+    "notes": "Thread-hijack invoice fraud: quoted reply history for credibility, near-miss vendor domain, banking coordinates changed."
+  },
+  {
+    "email": {
+      "message_id": "bec-009",
+      "sender": "\"Robert Chen\" <robert.chen@contoso.com>",
+      "subject": "Re: Board pack — please send the signed copy",
+      "body_text": "Alex,\n\nCould you send me the signed board pack when you get a chance? No rush, tomorrow is fine.\n\nRobert",
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso.com; s=selector1"
+      },
+      "recipients": [
+        "alex.morgan@contoso.com"
+      ],
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "hard",
+    "notes": "CONTROL CASE filed with BEC: genuine authenticated CEO request. No financial action, no urgency, no secrecy. Present to catch a BEC agent that fires on executive display names alone."
+  },
+  {
+    "email": {
+      "message_id": "bec-010",
+      "sender": "\"Accounts Payable\" <ap@contoso.com>",
+      "subject": "Supplier bank detail change — Northwind Traders",
+      "body_text": "Team,\n\nNorthwind Traders have notified us of a change of bank account. Per policy I have NOT applied the change from the email alone — I called their published number and confirmed with Sonia Bright directly, and the change is logged under ticket AP-3391.\n\nThe new details take effect from the next payment run.\n\nAP Team",
+      "recipients": [
+        "finance@contoso.com"
+      ],
+      "headers": {
+        "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)",
+        "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso.com; s=selector1"
+      },
+      "org_context": {
+        "internal_domains": [
+          "contoso.com"
+        ],
+        "executives": [
+          "robert chen",
+          "maria alvarez",
+          "priya nandan"
+        ],
+        "known_vendor_domains": [
+          "northwind-traders.com",
+          "fabrikam.com"
+        ]
+      }
+    },
+    "label": "CLEAN",
+    "expected_action": "DELIVER",
+    "difficulty": "hard",
+    "notes": "CONTROL CASE: internal mail *about* a bank detail change, containing every BEC keyword, but authenticated internal and explicitly describing out-of-band verification."
+  }
+]

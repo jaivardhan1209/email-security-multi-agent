@@ -1,0 +1,30 @@
+{
+  "message_id": "u-06",
+  "sender": "\"Contoso People Team\" <people@contoso.com>",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "5 minutes: Q3 engagement survey closes Friday",
+  "body_text": "Hi Alex,\n\nOur Q3 engagement survey closes on Friday and takes about five minutes. It is anonymous and we never ask for your password or any account details.\n\nTake the survey: https://contoso.com/surveys/q3\n\nThanks,\nThe People Team",
+  "urls": [
+    "https://contoso.com/surveys/q3"
+  ],
+  "headers": {
+    "Authentication-Results": "spf=pass smtp.mailfrom=contoso.com; dkim=pass header.d=contoso.com; dmarc=pass (p=reject)",
+    "DKIM-Signature": "v=1; a=rsa-sha256; d=contoso.com; s=s1"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}

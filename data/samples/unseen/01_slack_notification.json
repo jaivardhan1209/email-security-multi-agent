@@ -1,0 +1,30 @@
+{
+  "message_id": "u-01",
+  "sender": "\"Slack\" <notifications@slack.com>",
+  "recipients": [
+    "alex.morgan@contoso.com"
+  ],
+  "subject": "Priya Nandan invited you to #platform-oncall",
+  "body_text": "Priya Nandan invited you to join the channel #platform-oncall in the Contoso workspace.\n\nJoin the channel: https://slack.com/app_redirect?channel=platform-oncall\n\nYou are receiving this because you are a member of the Contoso workspace.",
+  "urls": [
+    "https://slack.com/app_redirect?channel=platform-oncall"
+  ],
+  "headers": {
+    "Authentication-Results": "spf=pass smtp.mailfrom=slack.com; dkim=pass header.d=slack.com; dmarc=pass (p=reject)",
+    "DKIM-Signature": "v=1; a=rsa-sha256; d=slack.com; s=s1"
+  },
+  "org_context": {
+    "internal_domains": [
+      "contoso.com"
+    ],
+    "executives": [
+      "robert chen",
+      "maria alvarez",
+      "priya nandan"
+    ],
+    "known_vendor_domains": [
+      "northwind-traders.com",
+      "fabrikam.com"
+    ]
+  }
+}
